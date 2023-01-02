@@ -33,19 +33,29 @@ r = requests.post(url=URL, headers=PARAMS, data=json.dumps(data))
 data = r.json()
 
 
-# print(data)
+#print(data)
 print(data["meter_reading"]["interval_reading"][0]["value"])
 print(data["meter_reading"]["interval_reading"][0]["date"])
 
+#Save the date and the value
+date=data["meter_reading"]["interval_reading"][0]["date"]
+value=data["meter_reading"]["interval_reading"][0]["value"]
 
 # Connect to the database
 connection = psycopg2.connect(
     f"postgres://{str(os.getenv('USERNAME'))}:{str(os.getenv('PASSWORD'))}@postgresql-2791bab0-od486479f.database.cloud.ovh.net:20184/electric?sslmode=require")
 cursor = connection.cursor()
 
-# Make a query inside the database
-# cursor.execute("")
-# cursor.fetchone()
+# Make a query inside the database and save one value of the electricity
+cursor.execute("INSERT INTO production_real_time (time,value) VALUES (%s,%s); ",(date,value))
+
+# Show if the query has worked
+cursor.execute("SELECT * FROM production_real_time ;")
+#Use fettch one to print only the value you add
+print(cursor.fetchone())
+
+# This is for make the data saved in the database. 
+connection.commit()
 
 # Close the database
 cursor.close()
