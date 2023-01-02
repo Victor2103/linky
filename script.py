@@ -15,4 +15,5 @@ PARAMS = {"Authorization": str(os.getenv("TOKEN"))}
 r = requests.get(url=URL, headers=PARAMS)
 # extracting data in json format
 data = r.json()
-print(data)
+
+print(data["meter_reading"]["interval_reading"])
