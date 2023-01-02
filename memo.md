@@ -46,7 +46,7 @@ The zip can be found on the tutorial [timescaleDocs](https://docs.timescale.com/
 I put it in a subfolder called `data` and I unziped it in the subfolder. 
 
 ```sql
-\COPY stocks_real_time from './tutorial_sample_tick.csv' DELIMITER ',' CSV HEADER;
-\COPY stocks_real_time from './tutorial_sample_tick.csv' DELIMITER ',' CSV HEADER;
+\COPY stocks_real_time from './data/tutorial_sample_tick.csv' DELIMITER ',' CSV HEADER;
+\COPY stocks_real_time from './data/tutorial_sample_tick.csv' DELIMITER ',' CSV HEADER;
 ```
 
