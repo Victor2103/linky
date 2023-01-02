@@ -1,20 +1,18 @@
-# importing the requests library
+# importing the requests library and environnements and os library
 import requests
+from dotenv import load_dotenv
+import os
+# PDL of the linky
+
+# Load environments variables
+load_dotenv()
+
 # api-endpoint
-URL = "http://maps.googleapis.com/maps/api/geocode/json"
-# location given here
-location = "delhi technological university"
+URL = f"https://www.myelectricaldata.fr/daily_consumption_max_power/{str(os.getenv('PDL'))}/start/2022-09-05/end/2022-10-12"
 # defining a params dict for the parameters to be sent to the API
-PARAMS = {'address':location}
+PARAMS = {"Authorization": str(os.getenv("TOKEN"))}
 # sending get request and saving the response as response object
-r = requests.get(url = URL, params = PARAMS)
+r = requests.get(url=URL, headers=PARAMS)
 # extracting data in json format
 data = r.json()
-# extracting latitude, longitude and formatted address 
-# of the first matching location
-latitude = data['results'][0]['geometry']['location']['lat']
-longitude = data['results'][0]['geometry']['location']['lng']
-formatted_address = data['results'][0]['formatted_address']
-# printing the output
-print("Latitude:%s\nLongitude:%s\nFormatted Address:%s"
-%(latitude, longitude,formatted_address))
+print(data)
