@@ -2,7 +2,7 @@
 import requests
 from dotenv import load_dotenv
 import os
-# PDL of the linky
+import psycopg2
 
 # Load environments variables
 load_dotenv()
@@ -16,4 +16,17 @@ r = requests.get(url=URL, headers=PARAMS)
 # extracting data in json format
 data = r.json()
 
-print(data["meter_reading"]["interval_reading"])
+print(data["meter_reading"]["interval_reading"][0])
+
+
+#Connect to the database
+connection=psycopg2.connect(f"postgres://{str(os.getenv('USERNAME'))}:{str(os.getenv('PASSWORD'))}@postgresql-2791bab0-od486479f.database.cloud.ovh.net:20184/electric?sslmode=require")
+cursor = connection.cursor()
+
+# Make a query inside the database
+#cursor.execute("")
+#cursor.fetchone()
+
+#Close the database
+cursor.close()
+connection.close()
