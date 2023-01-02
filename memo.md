@@ -50,3 +50,12 @@ I put it in a subfolder called `data` and I unziped it in the subfolder.
 \COPY stocks_real_time from './data/tutorial_sample_tick.csv' DELIMITER ',' CSV HEADER;
 ```
 
+## Look at your data 
+
+- Query your data to get what you want.
+
+```sql 
+SELECT * FROM stocks_real_time srt
+WHERE time > now() - INTERVAL '4 days';
+```
+
