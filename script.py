@@ -3,7 +3,6 @@ import requests
 from dotenv import load_dotenv
 import os
 import psycopg2
-import json
 
 # Load environments variables
 load_dotenv()
