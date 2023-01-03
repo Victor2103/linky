@@ -8,7 +8,7 @@ import json
 # Load environments variables
 load_dotenv()
 
-"""
+
 # api-endpoint for my electrical data
 URL = f"https://www.myelectricaldata.fr/daily_consumption/{str(os.getenv('PDL'))}/start/2022-12-29/end/2022-12-31"
 # defining a params dict for the parameters to be sent to the API
@@ -17,8 +17,9 @@ PARAMS = {"Authorization": str(os.getenv("TOKEN"))}
 r = requests.get(url=URL, headers=PARAMS)
 # extracting data in json format
 data = r.json()
-"""
 
+
+"""
 # api-endpoint for enedis gateway
 URL = "https://enedisgateway.tech/api"
 # Defining the headers
@@ -31,6 +32,7 @@ data = {"type": "daily_consumption", "usage_point_id": str(
 r = requests.post(url=URL, headers=PARAMS, data=json.dumps(data))
 # extracting data in json format
 data = r.json()
+"""
 
 print(data)
 # print(data["meter_reading"]["interval_reading"][0]["value"])
@@ -67,3 +69,6 @@ connection.commit()
 # Close the database
 cursor.close()
 connection.close()
+
+
+
