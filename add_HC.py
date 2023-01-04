@@ -33,10 +33,10 @@ def add_into_heures_creuses(nameFile):
         if (hour_clean > 6 and hour_clean < 736) or (hour_clean > 1236 and hour_clean < 1336):
             # Make a query inside the database and save the value of the consommation
             cursor.execute(
-                "INSERT INTO heures_creuses (time,value) VALUES (%s,%s); ", (date, value))
+                "INSERT INTO heures_creuses (time,heures_creuses) VALUES (%s,%s); ", (date, value))
         else:
             cursor.execute(
-                "INSERT INTO heures_pleines (time,value) VALUES (%s,%s); ", (date, value))
+                "INSERT INTO heures_pleines (time,heures_pleines) VALUES (%s,%s); ", (date, value))
 
     # Show if the query has worked
     cursor.execute("SELECT * FROM heures_creuses ;")
