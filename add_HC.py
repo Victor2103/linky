@@ -33,15 +33,10 @@ def add_into_heures_creuses(nameFile):
         if (hour_clean > 6 and hour_clean < 736) or (hour_clean > 1236 and hour_clean < 1336):
             # Make a query inside the database and save the value of the consommation
             cursor.execute(
-                "INSERT INTO heures_creuses (time,heures_creuses) VALUES (%s,%s); ", (date, value))
+                "INSERT INTO consommation (time,conso,is_heures_pleines) VALUES (%s,%s,%s); ", (date, value, 0))
         else:
             cursor.execute(
-                "INSERT INTO heures_pleines (time,heures_pleines) VALUES (%s,%s); ", (date, value))
-
-    # Show if the query has worked
-    cursor.execute("SELECT * FROM heures_creuses ;")
-    # Use fettch one to print only the value you add
-    print(cursor.fetchone())
+                "INSERT INTO consommation (time,conso,is_heures_pleines) VALUES (%s,%s,%s); ", (date, value, 1))
 
     # This is for make the data saved in the database.
     connection.commit()
