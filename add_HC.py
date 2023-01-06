@@ -1,5 +1,4 @@
 # importing the requests library and environnements and os library
-import requests
 import os
 import psycopg2
 import json
@@ -44,6 +43,7 @@ def add_into_heures_creuses(nameFile):
     # Close the database
     cursor.close()
     connection.close()
+
 
 """
 # For each data in the json, we add into our database on the public cloud.
