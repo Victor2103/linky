@@ -34,12 +34,12 @@ for i in range(1, 13):
     if (i == 4) or (i == 6) or (i == 9):
         start = f'2023-0{i}-01 00:00:00'
         end = f"2023-0{i}-30 00:00:00"
-    if i == 10:
+    if i == 11:
         start = f'2022-{i}-01 00:00:00'
         end = f"2022-{i}-30 00:00:00"
     # Get from the database the conut of the month
     cursor.execute(
-        f"SELECT COUNT(conso) FROM consommation WHERE time > '{start}' AND time < '{end}'")
+        f"SELECT SUM(conso) FROM consommation WHERE time >= '{start}' AND time < '{end}'")
     value = cursor.fetchone()
     # We insert the value of the month in the database.
     cursor.execute(
