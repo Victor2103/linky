@@ -36,14 +36,12 @@ def add_into_heures_creuses(nameFile):
         else:
             cursor.execute(
                 "INSERT INTO consommation (time,conso,is_heures_pleines) VALUES (%s,%s,%s); ", (date, value, 1))
-
     # This is for make the data saved in the database.
     connection.commit()
 
     # Close the database
     cursor.close()
     connection.close()
-
 
 
 # For each data in the json, we add into our database on the public cloud.

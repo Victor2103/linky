@@ -50,6 +50,11 @@ I put it in a subfolder called `data` and I unziped it in the subfolder.
 \COPY stocks_real_time from './data/tutorial_sample_tick.csv' DELIMITER ',' CSV HEADER;
 ```
 
+## Create unique index for the time and the consommation to avoid doublons
+
+ALTER IGNORE TABLE consommation ADD UNIQUE INDEX(time,conso);
+
+
 ## Look at your data 
 
 - Query your data to get what you want.

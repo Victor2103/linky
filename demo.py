@@ -32,11 +32,17 @@ for i in range(0, len(data["meter_reading"]["interval_reading"])):
     # Check if we make the query (we are in empty hours)
     if (hour_clean > 6 and hour_clean < 736) or (hour_clean > 1236 and hour_clean < 1336):
         # Make a query inside the database and save the value of the consommation
-        cursor.execute(
-            "INSERT INTO consommation (time,conso,is_heures_pleines) VALUES (%s,%s,%s); ", (date, value, 0))
+        try:
+            cursor.execute(
+                "INSERT INTO consommation (time,conso,is_heures_pleines) VALUES (%s,%s,%s); ", (date, value, 0))
+        except Exception:
+            pass
     else:
-        cursor.execute(
-            "INSERT INTO consommation (time,conso,is_heures_pleines) VALUES (%s,%s,%s); ", (date, value, 1))
+        try:
+            cursor.execute(
+                "INSERT INTO consommation (time,conso,is_heures_pleines) VALUES (%s,%s,%s); ", (date, value, 1))
+        except Exception:
+            pass
 
 # This is for make the data saved in the database.
 connection.commit()
