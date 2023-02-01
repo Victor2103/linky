@@ -28,37 +28,32 @@ def add_into_heures_creuses(nameFile):
     with open(nameFile) as f:
         data = json.load(f)
 
-    # Test if the json is correctly load
-    # print(data)
-    print(data["meter_reading"]["interval_reading"][23]["value"])
-
     # Connect to the database
     connection = psycopg2.connect(
         f"postgres://{str(os.getenv('USERNAME'))}:{str(os.getenv('PASSWORD'))}@postgresql-2791bab0-od486479f.database.cloud.ovh.net:20184/electric?sslmode=require")
     cursor = connection.cursor()
 
-    # We make a loop and we save all the data in the database
+    # For each value we add it into the database.
     for i in range(0, len(data["meter_reading"]["interval_reading"])):
+        # We get the value of the date and the consommation to add
         date = data["meter_reading"]["interval_reading"][i]["date"]
         value = data["meter_reading"]["interval_reading"][i]["value"]
-        print(date, value)
-        hour = date.split(" ")[1]
-        hour_clean = int(hour[0]+hour[1]+hour[3]+hour[4])
-        # Check if we make the query (we are in empty hours)
-        if (hour_clean > 6 and hour_clean < 736) or (hour_clean > 1236 and hour_clean < 1336):
-            # Make a query inside the database and save the value of the consommation
-            try:
+        # We check if the value is already in the database
+        cursor.execute(
+            f"SELECT exists (SELECT time FROM consommation WHERE time = '{date}' LIMIT 1);")
+        result = cursor.fetchone()
+        # If the value is not present in the database we added it in the db.
+        if result[0] == False:
+            hour = date.split(" ")[1]
+            hour_clean = int(hour[0]+hour[1]+hour[3]+hour[4])
+            # Check the difference with off-peak hours and non off peak hours.
+            if (hour_clean > 6 and hour_clean < 736) or (hour_clean > 1236 and hour_clean < 1336):
                 cursor.execute(
                     "INSERT INTO consommation (time,conso,is_heures_pleines) VALUES (%s,%s,%s); ", (date, value, 0))
-            except Exception as e:
-                print(e)
-                pass
-        else:
-            try:
+            else:
                 cursor.execute(
                     "INSERT INTO consommation (time,conso,is_heures_pleines) VALUES (%s,%s,%s); ", (date, value, 1))
-            except Exception:
-                pass
+
     # This is for make the data saved in the database.
     connection.commit()
 
@@ -67,7 +62,7 @@ def add_into_heures_creuses(nameFile):
     connection.close()
 
     # Send a message to telegram
-    test = telegram_bot_sendtext("Well done, your data has been added ! ")
+    telegram_bot_sendtext("Well done, your data has been added ! ")
 
 
 # For each data in the json, we add into our database on the public cloud.
