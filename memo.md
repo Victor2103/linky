@@ -64,7 +64,7 @@ SELECT * FROM stocks_real_time srt
 WHERE time > now() - INTERVAL '4 days';
 ```
 
-# Delete data from the last 3 days for demonstration
+## Delete data from the last 3 days for testing the curl command. 
 
 ```sql
 DELETE FROM consommation WHERE time > now() - INTERVAL '3 days' ;
