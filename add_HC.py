@@ -66,7 +66,7 @@ def add_into_heures_creuses(nameFile):
 
 
 # For each data in the json, we add into our database on the public cloud.
-for i in range(26, 27):
+for i in range(27, 29):
     add_into_heures_creuses(f"my_data/appel_{i}.json")
     print(f"File appel_{i}.json added ! ")
 
